@@ -7,19 +7,21 @@ import './Search.css';
 
 const Search = ()  => {
 
-
     const [ qtd, setQtd ] = useState(0);
 
     const [ dados, setDatos ] = useState([]); //usestate recebe um array
 
     const [ repo, setRepo ] = useState(''); //nome do repositorio
 
+    const [ pag, setPag ] = useState(1);
+
     const getdados = async () => { // funcao assincrona
         <p>Carregando...</p>
         try { 
-            const resposta = await url_default.get(repo); //tentando fazer a requisição
+            const resposta = await url_default.get(repo+`/page=${pag}`); //tentando fazer a requisição
             const dado = resposta.data.items;
             const quant =  resposta.data.total_count;
+
             setQtd(quant);
             setDatos(dado);
             console.log(quant)
@@ -27,6 +29,7 @@ const Search = ()  => {
             console.log(repo);
         } catch(error) {
             console.log(error);
+
             if( repo != '') { 
                 alert("Há algo de errado com a API. Recarregue a página. Se não funcionar tente outra hora, ou entre em contato com os desenvolvedores!"+error)
             };
@@ -34,6 +37,21 @@ const Search = ()  => {
         
 
     };
+    
+
+    function paginas() {
+
+        let pages = [];
+
+        for (let i = 0; i < (qtd/30); i++){
+            pages.push(i);
+        }
+
+        return pages
+       
+    };
+
+    
     
 
   return (
@@ -50,7 +68,7 @@ const Search = ()  => {
                 
                 <div key={dados.id} className='dados'>
                     <h2 className='repository_img'>
-                        <a href={dados.svn_url}>
+                        <a href={dados.svn_url} target='_blank'>
                             <img src={ book }></img>
                             {dados.name}
                         </a>
@@ -60,9 +78,13 @@ const Search = ()  => {
                     <div className='container_star'>
                         <img src={ star }></img>
                         <p className='star'>{dados.stargazers_count.toLocaleString()}</p>
+                        <p>Última Atualização: {dados.updated_at.replace("-", "/").replace("-", "/").substring(0, 10).split('/').reverse().join('/')}</p>
                     </div>
                 </div>
             )))}
+        </div>
+        <div>
+            {paginas()}
         </div>
     </div>
   )

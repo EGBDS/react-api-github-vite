@@ -6,3 +6,9 @@
   text-decoration: none;
   font-size: large;
 }
+
+@media (max-width: 500px) {
+  * {
+      font-size: x-small;
+  }
+}
