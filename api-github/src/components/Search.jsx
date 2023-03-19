@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import url_default from '../axios/axios'; //importando url padrao
 
-
+import './Search.css';
 
 const Search = ()  => {
 
@@ -10,9 +10,8 @@ const Search = ()  => {
     const [ repo, setRepo ] = useState(''); //nome do repositorio
 
     const getdados = async () => { // funcao assincrona
-        
+        <p>Carregando...</p>
         try { 
-            <p>Carregando</p>
             const resposta = await url_default.get(repo); //tentando fazer a requisição
             const dado = resposta.data.items;
             setDatos(dado);
@@ -28,16 +27,21 @@ const Search = ()  => {
 
 
   return (
-    <div>Search
+    <div className='search'>
         <form onSubmit={(e) => {e.preventDefault()}}>
-            <input type='text' placeholder='Digite Aqui' onChange={(e) => setRepo(e.target.value)}/>
-            <button type='submit' value='buscar' onClick={getdados}>Buscar</button>
+            <input type='text' id='repository' placeholder='Digite Aqui' onChange={(e) => setRepo(e.target.value)}/>
+            <button type='submit' id='btn' value='buscar' onClick={getdados}>Buscar</button>
         </form>
         <div>
             {(dados.map((dados) => (
-                <div key={dados.id}>
-                    <h2><a href={dados.svn_url}>{dados.name}</a></h2>
-                    <p>{dados.description}</p>
+                <div key={dados.id} className='dados'>
+                    <h2 className='title'>
+                        <a href={dados.svn_url}>{dados.name}</a>
+                    </h2>
+                    <p className='description'>{dados.description}</p>
+                    <p className='language'>{dados.language}</p>
+                    <p className='star'>{dados.stargazers_count}</p>
+                    <p className='topics'>{dados.topics}</p>
                 </div>
             )))}
         </div>

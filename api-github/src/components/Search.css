@@ -1,0 +1,44 @@
+.search {
+    background-color: rgb(112, 108, 108);
+    padding: 2rem;
+    margin: auto 4rem;
+}
+
+#repository {
+    width: 30%;
+    height: 2rem;
+    font-size: x-large;
+    border: none;
+    height: 2rem;
+}
+
+#btn {
+    background-color: wheat;
+    min-width: 10%;
+    height: 2rem;
+    font-size: x-large;
+    transition: 0.3s;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+#btn:hover {
+    background-color: black;
+    color: white;
+}
+
+#btn:focus {
+    border-color: orange;
+}
+
+.dados {
+    margin: 2rem;
+    padding: 1rem;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.61);
+    text-align: left;
+}
+
+.dados h2, p {
+    margin: 1rem;
+}
