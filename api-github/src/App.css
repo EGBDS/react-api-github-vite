@@ -7,10 +7,31 @@
   color: white;
   background-color: gray;
   width: 100vw;
+  
 }
 
 header {
   background-color: rgb(31, 24, 24);
   width: 100%;
   padding: 1rem;
+}
+
+main {
+  min-height: 86vh;
+}
+
+footer {
+  background-color: rgb(31, 24, 24);
+  width: 100%;
+  padding: 1rem;
+}
+
+a {
+  color: white;
+  opacity: 0.5;
+  transition: .4s;
+}
+
+a:hover {
+  opacity: 1;
 }
