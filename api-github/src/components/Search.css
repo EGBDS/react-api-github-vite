@@ -2,23 +2,25 @@
     background-color: rgb(112, 108, 108);
     padding: 2rem;
     margin: auto 4rem;
+    min-height: 80vh;
 }
 
 #repository {
     width: 30%;
+    margin: 0;
+    padding: 0.1rem;
     height: 2rem;
-    font-size: x-large;
     border: none;
-    height: 2rem;
+    height: 1rem;
+    border-radius: none;
 }
+
 
 #btn {
     background-color: wheat;
     min-width: 10%;
-    height: 2rem;
-    font-size: x-large;
     transition: 0.3s;
-    border: 1px solid black;
+    border: 0.5px solid black;
     cursor: pointer;
 }
 
@@ -31,6 +33,10 @@
     border-color: orange;
 }
 
+.qtd {
+    margin: 1rem 1rem 0 1rem;
+}
+
 .dados {
     margin: 2rem;
     padding: 1rem;
@@ -39,6 +45,33 @@
     text-align: left;
 }
 
-.dados h2, p {
-    margin: 1rem;
+.dados h2, p , img{
+    margin: 0.5rem;
+}
+
+.repository_img > a{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+}
+
+.repository_img > a > img {
+    background-color: white;
+    border-radius: 20px;
+    margin: 0;
+    margin-right: 1rem;
+    padding: 0.1rem;
+}
+
+.container_star {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+}
+
+.container_star > img {
+    background-color: white;
+    border-radius: 20px;
 }
