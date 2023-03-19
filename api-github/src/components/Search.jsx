@@ -5,7 +5,30 @@ import star from '../assets/star.png';
 import book from '../assets/book.png';
 import './Search.css';
 
+
 const Search = ()  => {
+
+    function first_page() {
+        setPag(0);
+    };
+    
+    function last_page() {
+        var last = paginas[paginas.length - 1];
+        setPag(last);
+    };
+
+    function any_page() {
+        var page = document.querySelectorAll('button').forEach ( function(button) {
+            button.addEventListener('click', function(event) {
+                const el = event.target;
+                const id = el.id;
+                console.log(id);
+                return id;
+            });
+        })
+        console.log(page)
+        /* setPag(page); */
+    }
 
     const [ qtd, setQtd ] = useState(0);
 
@@ -13,10 +36,9 @@ const Search = ()  => {
 
     const [ repo, setRepo ] = useState(''); //nome do repositorio
 
-    const [ pag, setPag ] = useState(1);
+    const [ pag, setPag ] = useState(0);
 
     const getdados = async () => { // funcao assincrona
-        <p>Carregando...</p>
         try { 
             const resposta = await url_default.get(repo+`/page=${pag}`); //tentando fazer a requisição
             const dado = resposta.data.items;
@@ -27,6 +49,7 @@ const Search = ()  => {
             console.log(quant)
             console.log(dado);
             console.log(repo);
+            console.log(pag)
         } catch(error) {
             console.log(error);
 
@@ -35,26 +58,28 @@ const Search = ()  => {
             };
         }
         
-
     };
-    
+
 
     function paginas() {
 
         let pages = [];
-
+        /* console.log(pages) */
         for (let i = 0; i < (qtd/30); i++){
-            pages.push(i);
+            pages.push(
+            <button key={i.toString()} id={i.toString()} onClick={any_page}>{i}</button>
+            );
         }
 
-        return pages
+        return pages;
        
     };
 
-    
-    
+    useEffect(() => {
+        getdados();
+    },[pag])
 
-  return (
+return (
     <div className='search'>
         <form onSubmit={(e) => {e.preventDefault()}}>
             <input type='text' id='repository' placeholder='Digite Aqui' onChange={(e) => setRepo(e.target.value)}/>
@@ -84,7 +109,13 @@ const Search = ()  => {
             )))}
         </div>
         <div>
-            {paginas()}
+            <a href="#header">
+                <button onClick={ first_page }>First</button>
+            </a>
+            {paginas().slice(5, 10)}
+            <a href="#header">
+                <button onClick={ last_page }>Last</button>
+            </a>
         </div>
     </div>
   )

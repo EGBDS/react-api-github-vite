@@ -6,7 +6,7 @@ function App() {
 
   return (
     <div className="App">
-      <header>
+      <header id='header'>
         <h1>Pesquise Repositórios no GitHub</h1>
       </header>
       <main>
