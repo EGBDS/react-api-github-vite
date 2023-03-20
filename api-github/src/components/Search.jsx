@@ -8,59 +8,6 @@ import './Search.css';
 
 const Search = ()  => {
 
-    function first_page() {
-        setPag(0);
-    };
-    
-    function last_page() {
-        var last = paginas[paginas.length - 1];
-        setPag(last);
-    };
-
-    function any_page() {
-        var page = document.querySelectorAll('button').forEach ( function(button) {
-            button.addEventListener('click', function(event) {
-                const el = event.target;
-                const id = el.id;
-                console.log(id);
-                return id;
-            });
-        })
-        console.log(page)
-        /* setPag(page); */
-    }
-
-    const [ qtd, setQtd ] = useState(0);
-
-    const [ dados, setDatos ] = useState([]); //usestate recebe um array
-
-    const [ repo, setRepo ] = useState(''); //nome do repositorio
-
-    const [ pag, setPag ] = useState(0);
-
-    const getdados = async () => { // funcao assincrona
-        try { 
-            const resposta = await url_default.get(repo+`/page=${pag}`); //tentando fazer a requisição
-            const dado = resposta.data.items;
-            const quant =  resposta.data.total_count;
-
-            setQtd(quant);
-            setDatos(dado);
-            console.log(quant)
-            console.log(dado);
-            console.log(repo);
-            console.log(pag)
-        } catch(error) {
-            console.log(error);
-
-            if( repo != '') { 
-                alert("Há algo de errado com a API. Recarregue a página. Se não funcionar tente outra hora, ou entre em contato com os desenvolvedores!"+error)
-            };
-        }
-        
-    };
-
-
     function paginas() {
 
         let pages = [];
@@ -75,6 +22,62 @@ const Search = ()  => {
        
     };
 
+
+    function first_page() {
+        setPag(0);
+    };
+    
+    function last_page() {
+        var last = paginas[paginas.length - 1];
+        setPag(last);
+    };
+
+
+    function any_page() {
+        
+        document.querySelectorAll("button").forEach( function(button) {
+            button.addEventListener("click", function(event) {
+            const el = event.target;
+            const id = el.id;
+            setPag(id);
+          });
+          
+        });
+        console.log(pag);
+    };
+
+
+
+    const [ qtd, setQtd ] = useState(0);
+
+    const [ dados, setDatos ] = useState([]); //usestate recebe um array
+
+    const [ repo, setRepo ] = useState(''); //nome do repositorio
+
+    const [ pag, setPag ] = useState();
+
+    const getdados = async () => { // funcao assincrona
+        try { 
+            const resposta = await url_default.get(repo+`/page=${pag}`); //tentando fazer a requisição
+            const dado = resposta.data.items;
+            const quant =  resposta.data.total_count;
+
+            setQtd(quant);
+            setDatos(dado);
+            console.log(dado);
+            console.log(pag);
+        } catch(error) {
+            console.log(error);
+
+            if( repo != '') { 
+                alert("Há algo de errado com a API. Recarregue a página. Se não funcionar tente outra hora, ou entre em contato com os desenvolvedores!"+error)
+            };
+        }
+        
+    };
+
+
+    
     useEffect(() => {
         getdados();
     },[pag])
@@ -108,11 +111,13 @@ return (
                 </div>
             )))}
         </div>
-        <div>
+        <div id='paginate'>
             <a href="#header">
                 <button onClick={ first_page }>First</button>
             </a>
-            {paginas().slice(5, 10)}
+            <a href="#header">
+                {paginas().slice(0, 5)}
+            </a>
             <a href="#header">
                 <button onClick={ last_page }>Last</button>
             </a>
