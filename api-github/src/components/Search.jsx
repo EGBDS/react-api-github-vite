@@ -8,45 +8,6 @@ import './Search.css';
 
 const Search = ()  => {
 
-    function paginas() {
-
-        let pages = [];
-        /* console.log(pages) */
-        for (let i = 0; i < (qtd/30); i++){
-            pages.push(
-            <button key={i.toString()} id={i.toString()} onClick={any_page}>{i}</button>
-            );
-        }
-
-        return pages;
-       
-    };
-
-
-    function first_page() {
-        setPag(0);
-    };
-    
-    function last_page() {
-        var last = paginas[paginas.length - 1];
-        setPag(last);
-    };
-
-
-    function any_page() {
-        
-        document.querySelectorAll("button").forEach( function(button) {
-            button.addEventListener("click", function(event) {
-            const el = event.target;
-            const id = el.id;
-            setPag(id);
-          });
-          
-        });
-        console.log(pag);
-    };
-
-
 
     const [ qtd, setQtd ] = useState(0);
 
@@ -54,7 +15,10 @@ const Search = ()  => {
 
     const [ repo, setRepo ] = useState(''); //nome do repositorio
 
-    const [ pag, setPag ] = useState();
+    const [ pag, setPag ] = useState(1);
+
+    const [ pag_range_first, setPage_Range_First ] = useState(1);
+    const [ pag_range_end, setPage_Range_End ] = useState(7);
 
     const getdados = async () => { // funcao assincrona
         try { 
@@ -64,8 +28,7 @@ const Search = ()  => {
 
             setQtd(quant);
             setDatos(dado);
-            console.log(dado);
-            console.log(pag);
+            console.log(dado)
         } catch(error) {
             console.log(error);
 
@@ -76,11 +39,83 @@ const Search = ()  => {
         
     };
 
-
     
     useEffect(() => {
         getdados();
-    },[pag])
+    },[pag]);
+
+
+
+    function paginas() {
+
+        let pages = [];
+        /* console.log(pages) */
+        let a = 0;
+        pages.unshift(
+            <a href="#header" key={a.toString()}>
+                <button onClick={ first_page }>First</button>
+            </a>
+        );
+        for (let i = 1; i < (qtd/31); i++){
+            pages.push(
+            <a href="#header" key={i.toString()}>
+                <button  id={i.toString()} onClick={any_page}>{i}</button>
+            </a>
+            );
+            
+            
+        };
+        pages.push(
+            <a href="#header" key={last_page}>
+                <button onClick={ last_page }>Last</button>
+            </a>
+        );
+        return pages;
+       
+    };
+
+    function first_page() {
+        setPag(1);
+        setPage_Range_First(1);
+        setPage_Range_End(7);
+    };
+    
+    function last_page() {
+        var last = paginas().length - 1;
+        setPag(last);
+        setPage_Range_First(paginas().length - 10);
+        setPage_Range_End(paginas().length - 2);
+        return last;
+    };
+
+    console.log(paginas().length)
+
+    function any_page() {
+        
+        document.querySelectorAll("button").forEach( function(button) {
+            button.addEventListener("click", function(event) {
+            const el = event.target;
+            const id = el.id;
+            setPag(id);
+            if(id > 1){
+                setPage_Range_First(id);
+                if(id < paginas().length - 2){
+                    setPage_Range_First(id);
+                    setPage_Range_End(parseInt(id) + 7);
+                }
+                else {
+                    setPage_Range_First(parseInt(id) - 7);
+                    setPage_Range_End(paginas().length - 2)
+                }
+            }
+            else {
+                setPage_Range_First(1)
+            }
+            
+          });
+          
+        });
+    };
 
 return (
     <div className='search'>
@@ -112,18 +147,17 @@ return (
             )))}
         </div>
         <div id='paginate'>
-            <a href="#header">
-                <button onClick={ first_page }>First</button>
-            </a>
-            <a href="#header">
-                {paginas().slice(0, 5)}
-            </a>
-            <a href="#header">
-                <button onClick={ last_page }>Last</button>
-            </a>
+            
+            <ul href="#header">
+                {paginas().slice(0, 1)}
+                {paginas().slice( pag_range_first, pag_range_end )}
+                {paginas().slice(paginas().length-1 , paginas().length)}
+            </ul>
+            
+            
         </div>
     </div>
-  )
-}
+)
+};
 
 export default Search;
