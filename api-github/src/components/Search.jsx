@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import url_default from '../axios/axios'; //importando url padrao
 
 import star from '../assets/star.png';
@@ -8,9 +8,8 @@ import './Search.css';
 
 const Search = ()  => {
 
-
     const [ qtd, setQtd ] = useState(0);
-
+    
     const [ dados, setDatos ] = useState([]); //usestate recebe um array
 
     const [ repo, setRepo ] = useState(''); //nome do repositorio
@@ -18,6 +17,7 @@ const Search = ()  => {
     const [ pag, setPag ] = useState(1);
 
     const [ pag_range_first, setPage_Range_First ] = useState(1);
+
     const [ pag_range_end, setPage_Range_End ] = useState(7);
 
     const getdados = async () => { // funcao assincrona
@@ -26,9 +26,14 @@ const Search = ()  => {
             const dado = resposta.data.items;
             const quant =  resposta.data.total_count;
 
-            setQtd(quant);
+            if(qtd > quant) {
+                setQtd(qtd);
+            }
+            else {
+                setQtd(quant);
+            };  
             setDatos(dado);
-            console.log(dado)
+            console.log(dado);
         } catch(error) {
             console.log(error);
 
@@ -39,12 +44,9 @@ const Search = ()  => {
         
     };
 
-    
     useEffect(() => {
         getdados();
     },[pag]);
-
-
 
     function paginas() {
 
