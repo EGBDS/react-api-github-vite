@@ -119,6 +119,10 @@ const Search = ()  => {
         });
     };
 
+    while(dados <= 1) {
+        <p>carregando</p>
+    }
+
 return (
     <div className='search'>
         <form onSubmit={(e) => {e.preventDefault()}}>
@@ -130,7 +134,6 @@ return (
         </div>
         <div>
             {(dados.map((dados) => (
-                
                 <div key={dados.id} className='dados'>
                     <h2 className='repository_img'>
                         <a href={dados.svn_url} target='_blank'>
