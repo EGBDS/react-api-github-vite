@@ -8,6 +8,8 @@ import './Search.css';
 
 const Search = ()  => {
 
+    const sleep = ms => new Promise(res => setTimeout(res, ms));
+
     const [ qtd, setQtd ] = useState(0);
     
     const [ dados, setDatos ] = useState([]); //usestate recebe um array
@@ -19,6 +21,8 @@ const Search = ()  => {
     const [ pag_range_first, setPage_Range_First ] = useState(1);
 
     const [ pag_range_end, setPage_Range_End ] = useState(7);
+
+    
 
     const getdados = async () => { // funcao assincrona
         try { 
@@ -32,7 +36,25 @@ const Search = ()  => {
             else {
                 setQtd(quant);
             };  
-            setDatos(dado);
+            if(dado.length <= 1){
+                let dad = document.getElementById('dad');
+                dad.innerHTML = `<p>Carregando...</p>`;
+
+                let dados = document.getElementById('dados');
+                dados.style.display = "none";
+
+                await sleep(4000);
+                dad.innerHTML = `<p>Repositório não encontrado! Tente novamente.</p>`;
+                }
+            else {
+                setDatos(dado);
+                let dados = document.getElementById('dados');
+                dados.style.display = "block";
+
+                let dad = document.getElementById('dad');
+                dad.innerHTML = ``;
+            }
+            
             console.log(dado);
         } catch(error) {
             console.log(error);
@@ -119,9 +141,6 @@ const Search = ()  => {
         });
     };
 
-    while(dados <= 1) {
-        <p>carregando</p>
-    }
 
 return (
     <div className='search'>
@@ -132,7 +151,9 @@ return (
         <div className='qtd'>
             <h2>Quantidade de repositórios: {qtd.toLocaleString()}</h2> {/* tolocalestring faz com que o número tenha pontos para diferenciar de dezena, centena e etc... */}
         </div>
-        <div>
+        <div id='dad'>
+        </div>
+        <div id='dados'>
             {(dados.map((dados) => (
                 <div key={dados.id} className='dados'>
                     <h2 className='repository_img'>
