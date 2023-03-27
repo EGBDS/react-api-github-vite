@@ -12,16 +12,22 @@
     height: 2rem;
     border: none;
     height: 1rem;
-    border-radius: none;
+    border-radius: 3px 0px 0px 3px;
+    transition: 0.4s;
+}
+
+#repository:focus {
+    outline: none; /* tira a borda preta interna */
 }
 
 
 #btn {
     background-color: wheat;
     min-width: 10%;
-    transition: 0.3s;
+    transition: 0.4s;
     border: 0.5px solid black;
     cursor: pointer;
+    border-radius: 0px 3px 3px 0px;
 }
 
 #btn:hover {
@@ -33,15 +39,16 @@
     border-color: orange;
 }
 
-.qtd {
+#qtd {
     margin: 1rem 1rem 0 1rem;
+    display: none;
 }
 
 .dados {
     margin: 2rem;
     padding: 1rem;
     border-radius: 10px;
-    background-color: rgba(0, 0, 0, 0.61);
+    background-image: linear-gradient(to bottom, black, rgb(82, 80, 80));
     text-align: left;
 }
 
@@ -85,6 +92,34 @@
 .container_star > img {
     background-color: white;
     border-radius: 20px;
+}
+
+#paginate {
+    display: none;
+}
+
+button {
+    border: 1px solid black;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+#paginas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 30px;
+}
+
+#paginas > a {
+    margin: 0 0.05rem;
+    
+}
+
+#paginas > a:hover {
+    transform: scale(1.1);
 }
 
 @media (max-width: 500px) {
