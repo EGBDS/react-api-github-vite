@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState} from 'react'
-import url_default from '../axios/axios'; //importando url padrao
+import url_default from '../../axios/axios'; //importando url padrao
 
-import star from '../assets/star.png';
-import book from '../assets/book.png';
+import star from '../../assets/star.png';
+import book from '../../assets/book.png';
 import './Search.css';
 
 
@@ -11,7 +11,7 @@ const Search = ()  => {
     const sleep = ms => new Promise(res => setTimeout(res, ms)); //configuração padrão para o sleep
 
     /* const [ qtdp, setQtdp ] = useState(0); */
-    
+    const [ teste, setTeste ] = useState([])
     const [ qtd, setQtd ] = useState(0);
     console.log(qtd);
     
@@ -37,7 +37,6 @@ const Search = ()  => {
             const quant =  resposta.data.total_count;
             
             setQtd(quant);
-
             if(repos.current != '') {
                 if(dado.length < 1){
                     let dad = document.getElementById('dad');
@@ -92,16 +91,18 @@ const Search = ()  => {
 
     useEffect(() => {
         getdados();
-    },[addEventListener]);
+        paginas();
+    },[pag]);
 
-    var last = paginas().length - 1
-
-    function paginas() {
+    
+    
+    const paginas = () =>{
 
         let pages = [];
-        
+        console.log("first")
         let a = 0;
         pages.unshift(
+            
             <a href="#header" key={a.toString()} >
                 <button onClick={ first_page } id='0'>First</button>
             </a>
@@ -112,18 +113,17 @@ const Search = ()  => {
                 <button  id={i.toString()} onClick={any_page}>{i}</button>
             </a>
             );
-            
-            
         };
         pages.push(
             <a href="#header" key={last_page}>
                 <button onClick={ last_page } id={last}>Last</button>
             </a>
         );
-        return pages;
+        setTeste(pages)
        
     };
-
+    var last = teste.length - 1
+    
     function first_page() {
         setPag(1);
         setPage_Range_First(1);
@@ -133,12 +133,11 @@ const Search = ()  => {
     function last_page() {
         
         setPag(last);
-        setPage_Range_First(paginas().length - 10);
-        setPage_Range_End(paginas().length - 2);
-        return last;
+        setPage_Range_First(teste.length - 10);
+        setPage_Range_End(teste.length - 2);
     };
-
-    function any_page() {
+    //aquiii
+    const any_page = () => {
         document.querySelectorAll("button").forEach( function(button) {
             button.addEventListener("click", function(event) {
             const el = event.target;
@@ -155,7 +154,7 @@ const Search = ()  => {
             foco.style.color = "white";
 
             setMarq(id);
-            
+            console.log("click")
             if(id == "btn"){
                 setPag(1) //Quando clicar em "buscar" a pagina vai para a primeira.)
             }
@@ -166,7 +165,7 @@ const Search = ()  => {
             if(id > 1){
                 setPage_Range_First(id);
 
-                if(id < paginas().length - 2){
+                if(id < teste.length - 2){
                     if(id >= 6) {
                         setPage_Range_First(id - 3);
                         setPage_Range_End(parseInt(id) + 3);
@@ -178,7 +177,7 @@ const Search = ()  => {
                 }
                 else {
                     setPage_Range_First(parseInt(id) - 7);
-                    setPage_Range_End(paginas().length - 2);
+                    setPage_Range_End(teste.length - 2);
                 }
             }
             else {
@@ -225,9 +224,9 @@ return (
         <div id='paginate'>
             
             <ul href="#header">
-                {paginas().slice(0, 1)}
-                {paginas().slice( pag_range_first, pag_range_end )}
-                {paginas().slice(paginas().length-1 , paginas().length)}
+                {teste.slice(0, 1)}
+                {teste.slice( pag_range_first, pag_range_end )}
+                {teste.slice(paginas.length-1 , paginas.length)}
             </ul>
             
             
