@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState} from 'react'
+import { useEffect, useRef, useState} from 'react'
 import url_default from '../../axios/axios'; //importando url padrao
 
 import star from '../../assets/star.png';
@@ -9,15 +9,10 @@ import './Search.css';
 const Search = ()  => {
 
     const sleep = ms => new Promise(res => setTimeout(res, ms)); //configuração padrão para o sleep
-
-    /* const [ qtdp, setQtdp ] = useState(0); */
-    const [ teste, setTeste ] = useState([])
+    
     const [ qtd, setQtd ] = useState(0);
-    console.log(qtd);
     
     const [ dados, setDatos ] = useState([]); //usestate recebe um array
-    console.log(dados);
-    /* const [ repo, setRepo ] = useState(''); //nome do repositorio */
 
     const [ pag, setPag ] = useState(1);
     console.log(pag);
@@ -28,8 +23,7 @@ const Search = ()  => {
     const [ marq, setMarq ] = useState(0);
 
     const repos = useRef('');
-    console.log(repos.current)
-
+    console.log(repos);
     const getdados = async () => { // funcao assincrona
         try { 
             const resposta = await url_default.get(repos.current+`&per_page=10&page=${pag}`); //tentando fazer a requisição.
@@ -37,8 +31,9 @@ const Search = ()  => {
             const quant =  resposta.data.total_count;
             
             setQtd(quant);
-            if(repos.current != '') {
-                if(dado.length < 1){
+
+            if(repos.current !== ''){
+                if(dado.length <= 1){
                     let dad = document.getElementById('dad');
                     dad.innerHTML = `<p>Carregando...</p>`;
 
@@ -51,9 +46,9 @@ const Search = ()  => {
                     let qtd = document.getElementById('qtd');
                     qtd.style.display = "none";
 
-                    await sleep(4000);
+                    /* await sleep(3000); */
                     dad.innerHTML = `<p>Repositório não encontrado! Tente novamente.</p>`;
-                    }
+                }
                 else {
                     let dados = document.getElementById('dados');
                     dados.style.display = "none";
@@ -67,7 +62,7 @@ const Search = ()  => {
                     setDatos(dado);
                     let dad = document.getElementById('dad');
                     dad.innerHTML = `<p>Carregando...</p>`;
-                    await sleep(4000);
+                    /* await sleep(3000); */
                     dad.innerHTML = ``;
 
                     dados.style.display = "block";
@@ -76,7 +71,7 @@ const Search = ()  => {
 
                     qtd.style.display = "block";
                 };
-            };
+            }
             
             console.log(dado);
         } catch(error) {
@@ -89,20 +84,16 @@ const Search = ()  => {
         
     };
 
-    useEffect(() => {
-        getdados();
-        paginas();
-    },[pag]);
+    
 
-    
-    
-    const paginas = () =>{
+    var last = paginas().length - 1
+
+    function paginas() {
 
         let pages = [];
-        console.log("first")
+        
         let a = 0;
         pages.unshift(
-            
             <a href="#header" key={a.toString()} >
                 <button onClick={ first_page } id='0'>First</button>
             </a>
@@ -113,16 +104,17 @@ const Search = ()  => {
                 <button  id={i.toString()} onClick={any_page}>{i}</button>
             </a>
             );
+            
+            
         };
         pages.push(
-            <a href="#header" key={last_page}>
+            <a  key={last_page}>
                 <button onClick={ last_page } id={last}>Last</button>
             </a>
         );
-        setTeste(pages)
+        return pages;
        
     };
-    var last = teste.length - 1
     
     function first_page() {
         setPag(1);
@@ -131,18 +123,26 @@ const Search = ()  => {
     };
     
     function last_page() {
-        
+
         setPag(last);
-        setPage_Range_First(teste.length - 10);
-        setPage_Range_End(teste.length - 2);
+        setPage_Range_First(paginas().length - 10);
+        setPage_Range_End(paginas().length - 2);
+        return last;
     };
-    //aquiii
-    const any_page = () => {
-        document.querySelectorAll("button").forEach( function(button) {
-            button.addEventListener("click", function(event) {
-            const el = event.target;
+    
+    function any_page() {
+        console.log("any_page")
+        
+        /* let search = document.getElementsByClassName("search")
+        search.style.display = `none` */
+
+        document.addEventListener("click", function(e) {
+            const el = e.target;
             const id = el.id;
+            console.log("entrou")
+
             
+
             let reset = document.getElementById(marq);
             let foco = document.getElementById(id);
 
@@ -154,8 +154,9 @@ const Search = ()  => {
             foco.style.color = "white";
 
             setMarq(id);
-            console.log("click")
+            console.log("entrou")
             if(id == "btn"){
+                console.log("btn")
                 setPag(1) //Quando clicar em "buscar" a pagina vai para a primeira.)
             }
             else {
@@ -164,8 +165,11 @@ const Search = ()  => {
             }
             if(id > 1){
                 setPage_Range_First(id);
-
-                if(id < teste.length - 2){
+                let tag_dados = document.getElementById("dados")
+                tag_dados.style.display = "none";
+                console.log(tag_dados)
+                console.log("aqui")
+                if(id < paginas().length - 2){
                     if(id >= 6) {
                         setPage_Range_First(id - 3);
                         setPage_Range_End(parseInt(id) + 3);
@@ -177,18 +181,19 @@ const Search = ()  => {
                 }
                 else {
                     setPage_Range_First(parseInt(id) - 7);
-                    setPage_Range_End(teste.length - 2);
+                    setPage_Range_End(paginas().length - 2);
                 }
             }
             else {
                 setPage_Range_First(1);
             }
             
-          });
-          
-        });
-    };
-    
+        })
+    }
+       
+    useEffect(() => {
+        getdados();
+    },[pag]);
 
 return (
     <div className='search'>
@@ -224,9 +229,9 @@ return (
         <div id='paginate'>
             
             <ul href="#header">
-                {teste.slice(0, 1)}
-                {teste.slice( pag_range_first, pag_range_end )}
-                {teste.slice(paginas.length-1 , paginas.length)}
+                {paginas().slice(0, 1)}
+                {paginas().slice( pag_range_first, pag_range_end )}
+                {paginas().slice(paginas().length-1 , paginas().length)}
             </ul>
             
             
