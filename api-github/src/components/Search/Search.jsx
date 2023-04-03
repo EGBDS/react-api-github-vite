@@ -32,46 +32,45 @@ const Search = ()  => {
             
             setQtd(quant);
 
-            if(repos.current !== ''){
-                if(dado.length <= 1){
-                    let dad = document.getElementById('dad');
-                    dad.innerHTML = `<p>Carregando...</p>`;
+            if(repos.current == '')return//faz com que se a repos for igual a vazio, ela pare o codigo
+            if(dado.length <= 1){
+                let dad = document.getElementById('dad');
+                dad.innerHTML = `<p>Carregando...</p>`;
 
-                    let dados = document.getElementById('dados');
-                    dados.style.display = "none";
+                let dados = document.getElementById('dados');
+                dados.style.display = "none";
 
-                    let paginate = document.getElementById('paginate');
-                    paginate.style.display = "none";
+                let paginate = document.getElementById('paginate');
+                paginate.style.display = "none";
 
-                    let qtd = document.getElementById('qtd');
-                    qtd.style.display = "none";
+                let qtd = document.getElementById('qtd');
+                qtd.style.display = "none";
 
-                    /* await sleep(3000); */
-                    dad.innerHTML = `<p>Repositório não encontrado! Tente novamente.</p>`;
-                }
-                else {
-                    let dados = document.getElementById('dados');
-                    dados.style.display = "none";
-
-                    let paginate = document.getElementById('paginate');
-                    paginate.style.display = "none";
-
-                    let qtd = document.getElementById('qtd');
-                    qtd.style.display = "none";
-
-                    setDatos(dado);
-                    let dad = document.getElementById('dad');
-                    dad.innerHTML = `<p>Carregando...</p>`;
-                    /* await sleep(3000); */
-                    dad.innerHTML = ``;
-
-                    dados.style.display = "block";
-
-                    paginate.style.display = "block";
-
-                    qtd.style.display = "block";
-                };
+                await sleep(3000);
+                dad.innerHTML = `<p>Repositório não encontrado! Tente novamente.</p>`;
             }
+            else {
+                let dados = document.getElementById('dados');
+                dados.style.display = "none";
+
+                let paginate = document.getElementById('paginate');
+                paginate.style.display = "none";
+
+                let qtd = document.getElementById('qtd');
+                qtd.style.display = "none";
+
+                setDatos(dado);
+                let dad = document.getElementById('dad');
+                dad.innerHTML = `<p>Carregando...</p>`;
+                await sleep(3000);
+                dad.innerHTML = ``;
+
+                dados.style.display = "block";
+
+                paginate.style.display = "block";
+
+                qtd.style.display = "block";
+            };
             
             console.log(dado);
         } catch(error) {
@@ -81,11 +80,7 @@ const Search = ()  => {
                 alert("Há algo de errado com a API. Recarregue a página. Se não funcionar tente em alguns minutos ou entre em contato com os desenvolvedores @erick_gbs ! Tente novamente em alguns minutos. "+error);
             };
         }
-        
     };
-
-    
-
     var last = paginas().length - 1
 
     function paginas() {
@@ -101,11 +96,9 @@ const Search = ()  => {
         for (let i = 1; i < (qtd/10); i++){
             pages.push(
             <a href="#header" key={i.toString()}>
-                <button  id={i.toString()} onClick={any_page}>{i}</button>
+                <button type="button" id={i.toString()} onClick={()=>any_page(i)}>{i}</button>
             </a>
             );
-            
-            
         };
         pages.push(
             <a  key={last_page}>
@@ -113,7 +106,6 @@ const Search = ()  => {
             </a>
         );
         return pages;
-       
     };
     
     function first_page() {
@@ -123,72 +115,59 @@ const Search = ()  => {
     };
     
     function last_page() {
-
         setPag(last);
         setPage_Range_First(paginas().length - 10);
         setPage_Range_End(paginas().length - 2);
         return last;
     };
     
-    function any_page() {
-        console.log("any_page")
+    function any_page(id) {
         
-        /* let search = document.getElementsByClassName("search")
-        search.style.display = `none` */
+        let reset = document.getElementById(marq);
+        let foco = document.getElementById(id);
 
-        document.addEventListener("click", function(e) {
-            const el = e.target;
-            const id = el.id;
-            console.log("entrou")
-
-            
-
-            let reset = document.getElementById(marq);
-            let foco = document.getElementById(id);
-
+      
+        setMarq(id);
+        console.log("diferente de repository")
+        if(id == "btn"){
+            console.log("btn")
+            setPag(1) //Quando clicar em "buscar" a pagina vai para a primeira.)
+        }
+        else {
+            setPag(id);
+            //só para não dar possiveis erro, foi a melhor forma que achei de conseguir voltar a pagina para 1.
+        }
+        if(id > 1){
             reset.style.background = "#fff";
             reset.style.color = "black";
             reset.style.border = "1px solid black";
             
             foco.style.background = "black";
             foco.style.color = "white";
-
-            setMarq(id);
-            console.log("entrou")
-            if(id == "btn"){
-                console.log("btn")
-                setPag(1) //Quando clicar em "buscar" a pagina vai para a primeira.)
-            }
-            else {
-                setPag(id);
-                //só para não dar possiveis erro, foi a melhor forma que achei de conseguir voltar a pagina para 1.
-            }
-            if(id > 1){
-                setPage_Range_First(id);
-                let tag_dados = document.getElementById("dados")
-                tag_dados.style.display = "none";
-                console.log(tag_dados)
-                console.log("aqui")
-                if(id < paginas().length - 2){
-                    if(id >= 6) {
-                        setPage_Range_First(id - 3);
-                        setPage_Range_End(parseInt(id) + 3);
-                    }
-                    else {
-                        setPage_Range_First(1);
-                        setPage_Range_End(7);
-                    }
+            console.log('id>1')
+            setPage_Range_First(id);
+            let tag_dados = document.getElementById("dados")
+            tag_dados.style.display = "none";
+            console.log(tag_dados)
+            console.log("aqui")
+            if(id < paginas().length - 2){
+                if(id >= 6) {
+                    setPage_Range_First(id - 3);
+                    setPage_Range_End(parseInt(id) + 3);
                 }
                 else {
-                    setPage_Range_First(parseInt(id) - 7);
-                    setPage_Range_End(paginas().length - 2);
+                    setPage_Range_First(1);
+                    setPage_Range_End(7);
                 }
             }
             else {
-                setPage_Range_First(1);
+                setPage_Range_First(parseInt(id) - 7);
+                setPage_Range_End(paginas().length - 2);
             }
-            
-        })
+        }
+        else {
+            setPage_Range_First(1);
+        }
     }
        
     useEffect(() => {

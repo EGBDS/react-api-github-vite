@@ -34,6 +34,7 @@ a {
   opacity: 0.5;
   transition: .4s;
   text-decoration: underline;
+  
 }
 
 a:visited {

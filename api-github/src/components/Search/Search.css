@@ -50,6 +50,16 @@
     border-radius: 10px;
     background-image: linear-gradient(to bottom, black, rgb(82, 80, 80));
     text-align: left;
+    animation: opacity 2s ease-in-out  alternate;
+}
+
+@keyframes opacity {
+    0% {
+      opacity: 0;;
+    }
+    100% {
+      opacity: 1;;
+    }
 }
 
 .dados h2, p , img{
