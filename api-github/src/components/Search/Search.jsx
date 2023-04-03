@@ -11,6 +11,8 @@ const Search = ()  => {
     const sleep = ms => new Promise(res => setTimeout(res, ms)); //configuração padrão para o sleep
     
     const [ qtd, setQtd ] = useState(0);
+
+    const [ qtd_max, setQtd_Max ] = useState(0);
     
     const [ dados, setDatos ] = useState([]); //usestate recebe um array
 
@@ -29,7 +31,12 @@ const Search = ()  => {
             const resposta = await url_default.get(repos.current+`&per_page=10&page=${pag}`); //tentando fazer a requisição.
             const dado = resposta.data.items;
             const quant =  resposta.data.total_count;
-            
+            if(quant > 1000){
+                setQtd_Max(1000)
+            }
+            else {
+                setQtd_Max(quant);
+            }
             setQtd(quant);
 
             if(repos.current == '')return//faz com que se a repos for igual a vazio, ela pare o codigo
@@ -93,7 +100,7 @@ const Search = ()  => {
                 <button onClick={ first_page } id='0'>First</button>
             </a>
         );
-        for (let i = 1; i < (qtd/10); i++){
+        for (let i = 2; i < (qtd_max/10); i++){
             pages.push(
             <a href="#header" key={i.toString()}>
                 <button type="button" id={i.toString()} onClick={()=>any_page(i)}>{i}</button>
@@ -117,7 +124,7 @@ const Search = ()  => {
     function last_page() {
         setPag(last);
         setPage_Range_First(paginas().length - 10);
-        setPage_Range_End(paginas().length - 2);
+        setPage_Range_End(paginas().length - 1);
         return last;
     };
     
@@ -126,43 +133,52 @@ const Search = ()  => {
         let reset = document.getElementById(marq);
         let foco = document.getElementById(id);
 
-      
+        console.log(id)
+        /* let tag_dados = document.getElementById("dados")
+        tag_dados.style.display = "none"; */
+        /* console.log(tag_dados) */
         setMarq(id);
-        console.log("diferente de repository")
+        if(id == pag) return
         if(id == "btn"){
             console.log("btn")
             setPag(1) //Quando clicar em "buscar" a pagina vai para a primeira.)
-        }
-        else {
-            setPag(id);
-            //só para não dar possiveis erro, foi a melhor forma que achei de conseguir voltar a pagina para 1.
-        }
-        if(id > 1){
             reset.style.background = "#fff";
             reset.style.color = "black";
             reset.style.border = "1px solid black";
             
             foco.style.background = "black";
             foco.style.color = "white";
-            console.log('id>1')
-            setPage_Range_First(id);
-            let tag_dados = document.getElementById("dados")
-            tag_dados.style.display = "none";
-            console.log(tag_dados)
+        }
+        else {
+            reset.style.background = "#fff";
+            reset.style.color = "black";
+            reset.style.border = "1px solid black";
+            
+            foco.style.background = "black";
+            foco.style.color = "white";
+            setPag(id);
+            //só para não dar possiveis erro, foi a melhor forma que achei de conseguir voltar a pagina para 1.
+        }
+        if(id >= 1){
+            /* setPage_Range_First(id); */
+            
             console.log("aqui")
-            if(id < paginas().length - 2){
+            if(id < paginas().length - 4){
+                console.log("aqui iddd")
                 if(id >= 6) {
+                    console.log("aqui iddd2")
                     setPage_Range_First(id - 3);
                     setPage_Range_End(parseInt(id) + 3);
                 }
                 else {
+                    console.log("aqui iddd3")
                     setPage_Range_First(1);
                     setPage_Range_End(7);
                 }
             }
             else {
-                setPage_Range_First(parseInt(id) - 7);
-                setPage_Range_End(paginas().length - 2);
+                setPage_Range_First(parseInt(id) - 6);
+                setPage_Range_End(paginas().length - 1);
             }
         }
         else {
@@ -207,7 +223,7 @@ return (
         </div>
         <div id='paginate'>
             
-            <ul href="#header">
+            <ul id='list_paginate'>
                 {paginas().slice(0, 1)}
                 {paginas().slice( pag_range_first, pag_range_end )}
                 {paginas().slice(paginas().length-1 , paginas().length)}
