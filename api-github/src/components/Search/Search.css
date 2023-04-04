@@ -40,10 +40,31 @@
 }
 
 #qtd {
-    margin: 1rem 1rem 0 1rem;
     display: none;
 }
 
+
+
+#qtd_order {
+    margin: 1rem 1rem 0 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+}
+
+#order {
+    display: flex;
+}
+
+#order > select {
+    border-radius: 10px 0 10px 0;
+}
+
+#order > select:hover{
+    cursor: pointer;
+}
 .dados {
     margin: 2rem;
     padding: 1rem;
@@ -142,7 +163,14 @@ button:hover {
     
 }
 
-@media (max-width: 500px) {
+@media (max-width: 1000px) {
+    #qtd_order {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 610px) {
     /* * {
         font-size: xx-small;
     } */

@@ -17,7 +17,7 @@ const Search = ()  => {
     const [ dados, setDatos ] = useState([]); //usestate recebe um array
 
     const [ pag, setPag ] = useState(1);
-    console.log(pag);
+    
     const [ pag_range_first, setPage_Range_First ] = useState(1);
 
     const [ pag_range_end, setPage_Range_End ] = useState(7);
@@ -25,10 +25,14 @@ const Search = ()  => {
     const [ marq, setMarq ] = useState(0);
 
     const repos = useRef('');
-    console.log(repos);
+
+    const [ ordem, setOrdem ]= useState('');
+
+    const [ ascdesc, setAscDesc ]= useState('');
+
     const getdados = async () => { // funcao assincrona
         try { 
-            const resposta = await url_default.get(repos.current+`&per_page=10&page=${pag}`); //tentando fazer a requisição.
+            const resposta = await url_default.get(repos.current+`&per_page=10&page=${pag}&sort=${ordem}&order=${ascdesc}`); //tentando fazer a requisição.
             const dado = resposta.data.items;
             const quant =  resposta.data.total_count;
             if(quant > 1000){
@@ -79,7 +83,6 @@ const Search = ()  => {
                 qtd.style.display = "block";
             };
             
-            console.log(dado);
         } catch(error) {
             console.log(error);
 
@@ -134,14 +137,9 @@ const Search = ()  => {
         let reset = document.getElementById(marq);
         let foco = document.getElementById(id);
 
-        console.log(id)
-        /* let tag_dados = document.getElementById("dados")
-        tag_dados.style.display = "none"; */
-        /* console.log(tag_dados) */
         setMarq(id);
         if(id == pag) return
         if(id == "btn"){
-            console.log("btn")
             setPag(1) //Quando clicar em "buscar" a pagina vai para a primeira.)
             reset.style.background = "#fff";
             reset.style.color = "black";
@@ -163,16 +161,12 @@ const Search = ()  => {
         if(id >= 1){
             /* setPage_Range_First(id); */
             
-            console.log("aqui")
             if(id < paginas().length - 4){
-                console.log("aqui iddd")
                 if(id >= 7) {
-                    console.log("aqui iddd2")
                     setPage_Range_First(id - 3);
                     setPage_Range_End(parseInt(id) + 2);
                 }
                 else {
-                    console.log("aqui iddd3")
                     setPage_Range_First(1);
                     setPage_Range_End(7);
                 }
@@ -187,6 +181,30 @@ const Search = ()  => {
         }
     }
        
+    function Order() {
+        var resposta = document.getElementById("order_select")
+        var resposta = resposta.value
+        console.log(resposta)
+
+        switch(resposta) {
+            case 'star_desc':
+                setAscDesc('desc');
+                setOrdem('stars');
+                getdados();
+                break;
+            case 'star_asc':
+                setAscDesc('asc');
+                setOrdem('stars');
+                getdados();
+                break;
+            case 'updated':
+                setAscDesc('asc');
+                setOrdem('updated');
+                getdados();
+                break;
+        }
+    }
+
     useEffect(() => {
         getdados();
     },[pag]);
@@ -197,10 +215,18 @@ return (
             <input type='text' id='repository' placeholder='Digite Aqui' onChange={(e) => repos.current = e.target.value}/>
             <button type='submit' id='btn' value='buscar' onClick={getdados}>Buscar</button>
         </form>
-        <div id='qtd'>
-            <h2>Quantidade de repositórios: {qtd.toLocaleString()}</h2> {/* tolocalestring faz com que o número tenha pontos para diferenciar de dezena, centena e etc... */}
+        <div id='qtd_order'>
+            <div id='qtd'>
+                <h2>Quantidade de repositórios: {qtd.toLocaleString()}</h2> {/* tolocalestring faz com que o número tenha pontos para diferenciar de dezena, centena e etc... */}
+            </div>
+            <div id="order">
+                <select id='order_select' onChange={Order}>
+                    <option value={"star_desc"}>Estrelas(maior)</option>
+                    <option value={"star_asc"}>Estrelas(menor)</option>
+                    <option value={"updated"}>Atualização</option>
+                </select>
+            </div>
         </div>
-        
         <div id='dad'>
         </div>
         <div id='dados'>
