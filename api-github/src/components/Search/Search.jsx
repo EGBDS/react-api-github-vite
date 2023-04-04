@@ -88,8 +88,7 @@ const Search = ()  => {
             };
         }
     };
-    var last = paginas().length - 1
-
+    var last = paginas().length
     function paginas() {
 
         let pages = [];
@@ -119,12 +118,14 @@ const Search = ()  => {
         setPag(1);
         setPage_Range_First(1);
         setPage_Range_End(7);
+        any_page(0);
     };
     
     function last_page() {
         setPag(last);
         setPage_Range_First(paginas().length - 10);
         setPage_Range_End(paginas().length - 1);
+        any_page(paginas().length);
         return last;
     };
     
@@ -165,10 +166,10 @@ const Search = ()  => {
             console.log("aqui")
             if(id < paginas().length - 4){
                 console.log("aqui iddd")
-                if(id >= 6) {
+                if(id >= 7) {
                     console.log("aqui iddd2")
                     setPage_Range_First(id - 3);
-                    setPage_Range_End(parseInt(id) + 3);
+                    setPage_Range_End(parseInt(id) + 2);
                 }
                 else {
                     console.log("aqui iddd3")
