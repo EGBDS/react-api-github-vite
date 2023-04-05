@@ -40,7 +40,6 @@ const Search = ()  => {
     const [ paginate_id, setPaginate_id ] = useState('');
 
     const [ qtd_id, setQtd_id ] = useState('');
-    console.log(qtd_id)
 
     const getdados = async () => { // funcao assincrona
         try { 
