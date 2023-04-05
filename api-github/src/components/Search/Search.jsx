@@ -47,7 +47,7 @@ const Search = ()  => {
 
             const dado = resposta.data.items;
             const quant =  resposta.data.total_count;
-
+            console.log(resposta)
             if(quant > 1000){
                 setQtd_Max(1000)
             }
@@ -255,8 +255,10 @@ return (
                     <p className='description'>Descrição: {dados.description}</p>
                     <p className='language'>Linguagem: {dados.language}</p>
                     <div className='container_star'>
-                        <img src={ star }></img>
-                        <p className='star'>{dados.stargazers_count.toLocaleString()}</p>
+                        <a href={`https://github.com/${dados.full_name}/stargazers`} target='_blank'>
+                            <img src={ star }></img>
+                            <p className='star'>{dados.stargazers_count.toLocaleString()}</p>
+                        </a>
                         <p>Última Atualização: {dados.updated_at.replace("-", "/").replace("-", "/").substring(0, 10).split('/').reverse().join('/')}</p>
                     </div>
                 </div>

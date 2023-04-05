@@ -98,6 +98,10 @@
     text-align: center;
 }
 
+.repository_img > a {
+    display: flex;
+}
+
 .repository_img > a > img {
     background-color: white;
     border-radius: 20px;
@@ -123,9 +127,14 @@
     text-align: center;
 }
 
-.container_star > img {
-    background-color: white;
+.container_star > a {
+    display: flex;
     border-radius: 20px;
+    color: white;
+}
+
+.container_star > a:visited {
+    color: blueviolet;
 }
 
 #paginate {
@@ -159,6 +168,7 @@ button:hover {
     display: flex;
     flex-direction: row;
     justify-content: center;
+   
 }
 
 #list_paginate a {
@@ -177,6 +187,9 @@ button:hover {
     /* * {
         font-size: xx-small;
     } */
+    #list_paginate {
+       margin: 1rem;
+    }
     .search {
         padding: 1rem 0 0 0;
         margin: 0;
