@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState} from 'react'
+import { useEffect, useRef, useState} from 'react';
 import url_default from '../../axios/axios'; //importando url padrao
 
 import star from '../../assets/star.png';
 import book from '../../assets/book.png';
-import loading from '../../assets/loading.gif';
+import loading from '../../assets/loading.gif'; //importando imagens
 import './Search.css';
 
 
@@ -11,55 +11,64 @@ const Search = ()  => {
 
     const sleep = ms => new Promise(res => setTimeout(res, ms)); //configuração padrão para o sleep
     
-    const [ qtd, setQtd ] = useState(0);
+    const [ qtd, setQtd ] = useState(0); //Quantidade de repositório total.
 
-    const [ qtd_max, setQtd_Max ] = useState(0);
+    const [ qtd_max, setQtd_Max ] = useState(0); //Quantidade maxima conforme a documentação informa.
     
-    const [ dados, setDados ] = useState([]); //usestate recebe um array
+    const [ dados, setDados ] = useState([]); //usestate recebe um array.
 
-    const [ pag, setPag ] = useState(1);
+    const [ pag, setPag ] = useState(1); //pagina principal que está focada/utlizando.
     
-    const [ pag_range_first, setPage_Range_First ] = useState(1);
+    const [ pag_range_first, setPage_Range_First ] = useState(1);//primeiro número da paginação
 
-    const [ pag_range_end, setPage_Range_End ] = useState(7);
+    const [ pag_range_end, setPage_Range_End ] = useState(7);//ultimo número da paginação
 
-    const [ marq, setMarq ] = useState(0);
+    const [ marq, setMarq ] = useState(0);//para tirar voltar a cor do botão ao padrão quando selecionar outro
 
-    const repos = useRef('');
+    const repos = useRef('');//nome do repositório
 
-    const [ ordem, setOrdem ]= useState('');
+    const [ ordem, setOrdem ]= useState('');//filtro por strelas. Pode ser outros ditos na documentação.
 
-    const [ ascdesc, setAscDesc ]= useState('');
+    const [ ascdesc, setAscDesc ]= useState('');//order de exibição das estrelas, descrecente ou crescente.
 
-    const [ dad_id, setDad_id ] = useState(``);
+    const [ dad_id, setDad_id ] = useState(``);//Exibir gif de carregamento.
 
-    const [ ord_id, setOrd_id ] = useState('');
+    const [ ord_id, setOrd_id ] = useState('');//Exibir o select.
 
-    const [ dados_id, setDados_id ] = useState('');
+    const [ dados_id, setDados_id ] = useState('');//Exibir os dados
 
-    const [ paginate_id, setPaginate_id ] = useState('');
+    const [ paginate_id, setPaginate_id ] = useState('');//exibir a paginação
 
-    const [ qtd_id, setQtd_id ] = useState('');
+    const [ qtd_id, setQtd_id ] = useState('');//exibir a quantidade
 
     const getdados = async () => { // funcao assincrona
         try { 
             const resposta = await url_default.get(repos.current+`&per_page=10&page=${pag}&sort=${ordem}&order=${ascdesc}`); //tentando fazer a requisição.
 
+            //Armazenando os dados em constantes
             const dado = resposta.data.items;
             const quant =  resposta.data.total_count;
-            console.log(resposta)
+
+            //Passando a quantidade de repositórios
+            setQtd(quant);
+
+            //Limitando a quantidade pois o maximo é 1000 repositórios que a API trás
             if(quant > 1000){
                 setQtd_Max(1000)
             }
             else {
                 setQtd_Max(quant);
             }
-            setQtd(quant);
 
             if(repos.current == '')return//faz com que se a repos for igual a vazio, ela pare o codigo
+
+            //Verificando tem repositório digitado.
             if(dado.length <= 1){
+                
+                //mostrando o gif de loading
                 setDad_id(<img id='loading' src={loading} alt='Carregando'></img>);
 
+                //ocultando os itens
                 setOrd_id(`none`);
 
                 setDados_id(`none`);
@@ -68,12 +77,13 @@ const Search = ()  => {
 
                 setQtd_id(`none`);
 
-                await sleep(3000);
+                await sleep(3000);//espera a quantideda de tento descrito para continuar a execução.
 
                 setDad_id(`<p>Repositório não encontrado! Tente novamente.</p>`);
             }
             else {
 
+                //ocultando os itens
                 setOrd_id(`none`);
 
                 setDados_id(`none`);
@@ -82,14 +92,19 @@ const Search = ()  => {
 
                 setQtd_id(`none`);
 
+                //passando os dados
                 setDados(dado);
 
+                //exibindo gif loading
                 setDad_id(<img id='loading' src={loading} alt='Carregando'></img>);
 
+                //espera a quantideda de tento descrito para continuar a execução.
                 await sleep(3000);
 
+                //ocultando o tem
                 setDad_id(``);
 
+                //exibindo os itens
                 setDados_id(`block`);
 
                 setOrd_id(`block`);
@@ -100,24 +115,28 @@ const Search = ()  => {
             };
             
         } catch(error) {
-            console.log(error);
+            console.log(error);//se houver um erro entra nesse catch e exite o erro
 
             if( repos != '') { 
                 alert("Há algo de errado com a API. Recarregue a página. Se não funcionar tente em alguns minutos ou entre em contato com os desenvolvedores @erick_gbs ! Tente novamente em alguns minutos. "+error);
-            };
+            };//alerta para o usuário.
         }
     };
-    var last = paginas().length
+    var last = paginas().length //guardando o valor maximo
+
     function paginas() {
 
-        let pages = [];
+        let pages = [];//array para a paginação
         
+        //adicionando na primeira posição do array uma função/número
         let a = 0;
         pages.unshift(
             <a href="#header" key={a.toString()} >
                 <button onClick={ first_page } id='0'>First</button>
             </a>
         );
+
+        //adicionando no array a quantidade de número de paginás que terá
         for (let i = 2; i < (qtd_max/10); i++){
             pages.push(
             <a href="#header" key={i.toString()}>
@@ -125,6 +144,8 @@ const Search = ()  => {
             </a>
             );
         };
+
+        //adicionando na última posição do array uma função/número
         pages.push(
             <a  key={last_page}>
                 <button onClick={ last_page } id={last}>Last</button>
@@ -133,6 +154,7 @@ const Search = ()  => {
         return pages;
     };
     
+    //função para definir quais botão vão aparecer na paginação ao se clicado
     function first_page() {
         setPag(1);
         setPage_Range_First(1);
@@ -148,15 +170,23 @@ const Search = ()  => {
         return last;
     };
     
+    //função recebdno o indece do for e passando como id
     function any_page(id) {
         
+        //mudar a cor de fundo do botão se estiver focado e voltar ao normal quando outro tiver sido clicado
         let reset = document.getElementById(marq);
         let foco = document.getElementById(id);
 
+        //passando o id para saber qual vai ser desmarcado depois
         setMarq(id);
+
+        //veficação
         if(id == pag) return
+
+        //verifição
         if(id == "btn"){
             setPag(1) //Quando clicar em "buscar" a pagina vai para a primeira.)
+
             reset.style.background = "#fff";
             reset.style.color = "black";
             reset.style.border = "1px solid black";
@@ -172,10 +202,10 @@ const Search = ()  => {
             foco.style.background = "black";
             foco.style.color = "white";
             setPag(id);
-            //só para não dar possiveis erro, foi a melhor forma que achei de conseguir voltar a pagina para 1.
         }
+
+        //verificação para setar os botoés da paginação
         if(id >= 1){
-            /* setPage_Range_First(id); */
             
             if(id < paginas().length - 4){
                 if(id >= 7) {
@@ -197,6 +227,7 @@ const Search = ()  => {
         }
     }
        
+    //verificação para saber qual a order dos items será exibida
     function Order() {
         var resposta = document.getElementById("order_select")
         var resposta = resposta.value
@@ -216,16 +247,27 @@ const Search = ()  => {
         
     };
 
+    //hook para cada modificação em pag, ele chame a funcao getdados;
     useEffect(() => {
         getdados();
     },[pag]);
 
 return (
     <div className='search'>
+
         <div id='container_form'>
+
             <form onSubmit={(e) => {e.preventDefault()}}>
-                <input type='text' id='repository' placeholder='Digite Aqui' onChange={(e) => repos.current = e.target.value}/>
-                <button type='submit' id='btn' value='buscar' onClick={getdados}>Buscar</button>
+
+                <input type='text' 
+                        id='repository' 
+                        placeholder='Digite Aqui' 
+                        onChange={(e) => repos.current = e.target.value}
+                />
+                <button type='submit' 
+                        id='btn' 
+                        value='buscar' 
+                        onClick={getdados}>Buscar</button>
             </form>
             <div id='qtd_order' >
                 <div id='qtd' style={{display: qtd_id}}>
@@ -267,7 +309,7 @@ return (
         <div id='paginate' style={{display: paginate_id}}>
             
             <ul id='list_paginate'>
-                {paginas().slice(0, 1)}
+                {paginas().slice(0, 1)}{/* slice para mostrar de um x item até o y item do array */}
                 {paginas().slice( pag_range_first, pag_range_end )}
                 {paginas().slice(paginas().length-1 , paginas().length)}
             </ul>
