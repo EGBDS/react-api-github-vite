@@ -15,7 +15,7 @@ const Search = ()  => {
 
     const [ qtd_max, setQtd_Max ] = useState(0);
     
-    const [ dados, setDatos ] = useState([]); //usestate recebe um array
+    const [ dados, setDados ] = useState([]); //usestate recebe um array
 
     const [ pag, setPag ] = useState(1);
     
@@ -31,13 +31,24 @@ const Search = ()  => {
 
     const [ ascdesc, setAscDesc ]= useState('');
 
+    const [ dad_id, setDad_id ] = useState(``);
+
+    const [ ord_id, setOrd_id ] = useState('');
+
+    const [ dados_id, setDados_id ] = useState('');
+
+    const [ paginate_id, setPaginate_id ] = useState('');
+
+    const [ qtd_id, setQtd_id ] = useState('');
+    console.log(qtd_id)
+
     const getdados = async () => { // funcao assincrona
         try { 
             const resposta = await url_default.get(repos.current+`&per_page=10&page=${pag}&sort=${ordem}&order=${ascdesc}`); //tentando fazer a requisição.
-            console.log(ascdesc)
+
             const dado = resposta.data.items;
             const quant =  resposta.data.total_count;
-            console.log(resposta);
+
             if(quant > 1000){
                 setQtd_Max(1000)
             }
@@ -48,53 +59,45 @@ const Search = ()  => {
 
             if(repos.current == '')return//faz com que se a repos for igual a vazio, ela pare o codigo
             if(dado.length <= 1){
-                
+                setDad_id(<img id='loading' src={loading} alt='Carregando'></img>);
 
-                let dad = document.getElementById('dad');
-                dad.innerHTML = `<img id='loading' src=${loading} alt='Carregando'></img>`;
+                setOrd_id(`none`);
 
-                let ord = document.getElementById("order");
-                ord.style.display = "none";
+                setDados_id(`none`);
 
-                let dados = document.getElementById('dados');
-                dados.style.display = "none";
+                setPaginate_id(`none`);
 
-                let paginate = document.getElementById('paginate');
-                paginate.style.display = "none";
-
-                let qtd = document.getElementById('qtd');
-                qtd.style.display = "none";
+                setQtd_id(`none`);
 
                 await sleep(3000);
-                dad.innerHTML = `<p>Repositório não encontrado! Tente novamente.</p>`;
+
+                setDad_id(`<p>Repositório não encontrado! Tente novamente.</p>`);
             }
             else {
-                let dados = document.getElementById('dados');
-                dados.style.display = "none";
 
-                let paginate = document.getElementById('paginate');
-                paginate.style.display = "none";
+                setOrd_id(`none`);
 
-                let qtd = document.getElementById('qtd');
-                qtd.style.display = "none";
+                setDados_id(`none`);
 
-                let ord = document.getElementById("order");
-                ord.style.display = "none";
+                setPaginate_id(`none`);
 
-                setDatos(dado);
-                let dad = document.getElementById('dad');
-                dad.innerHTML = `<img id='loading' src=${loading} alt='Carregando'></img>`;
+                setQtd_id(`none`);
+
+                setDados(dado);
+
+                setDad_id(<img id='loading' src={loading} alt='Carregando'></img>);
+
                 await sleep(3000);
-                
-                dad.innerHTML = ``;
 
-                dados.style.display = "block";
+                setDad_id(``);
 
-                ord.style.display = "block";
+                setDados_id(`block`);
 
-                paginate.style.display = "block";
+                setOrd_id(`block`);
 
-                qtd.style.display = "block";
+                setPaginate_id(`block`);
+
+                setQtd_id(`block`);
             };
             
         } catch(error) {
@@ -198,18 +201,15 @@ const Search = ()  => {
     function Order() {
         var resposta = document.getElementById("order_select")
         var resposta = resposta.value
-        console.log(resposta)
 
         switch(resposta) {
             case 'star_desc':
                 setOrdem('stars');
                 setAscDesc('desc');
-                console.log("desc");
                 break;
             case 'star_asc':
                 setOrdem('stars');
                 setAscDesc('asc');
-                console.log("asc");
                 break;
             case '':
                 break;
@@ -228,12 +228,12 @@ return (
                 <input type='text' id='repository' placeholder='Digite Aqui' onChange={(e) => repos.current = e.target.value}/>
                 <button type='submit' id='btn' value='buscar' onClick={getdados}>Buscar</button>
             </form>
-            <div id='qtd_order'>
-                <div id='qtd'>
+            <div id='qtd_order' >
+                <div id='qtd' style={{display: qtd_id}}>
                     <h2>Quantidade de repositórios: {qtd.toLocaleString()}</h2> {/* tolocalestring faz com que o número tenha pontos para diferenciar de dezena, centena e etc... */}
                 </div>
-                <div id="order">
-                    <select id='order_select' onChange={Order}>
+                <div id="order" style={{display: ord_id}}>
+                    <select id='order_select' onChange={Order} >
                         <option value={""}>Ordem</option>
                         <option value={"star_desc"}>Estrelas(maior)</option>
                         <option value={"star_asc"}>Estrelas(menor)</option>
@@ -242,8 +242,9 @@ return (
         </div>
         </div>
         <div id='dad'>
+            {dad_id}
         </div>
-        <div id='dados'>
+        <div id='dados' style={{display: dados_id}}>
             {(dados.map((dados) => (
                 <div key={dados.id} className='dados'>
                     <h2 className='repository_img'>
@@ -262,7 +263,7 @@ return (
                 </div>
             )))}
         </div>
-        <div id='paginate'>
+        <div id='paginate' style={{display: paginate_id}}>
             
             <ul id='list_paginate'>
                 {paginas().slice(0, 1)}
