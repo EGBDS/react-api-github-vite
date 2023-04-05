@@ -1,7 +1,6 @@
 .search {
     background-color: rgb(112, 108, 108);
     padding: 2rem;
-    margin: auto 4rem;
     min-height: 80vh;
 }
 
@@ -43,19 +42,23 @@
     display: none;
 }
 
-
+#loading {
+    margin: 10rem;
+    max-width: 5rem;
+}
 
 #qtd_order {
     margin: 1rem 1rem 0 1rem;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     text-align: center;
 }
 
 #order {
-    display: flex;
+    display: none;
+    margin-left: 1rem;
 }
 
 #order > select {

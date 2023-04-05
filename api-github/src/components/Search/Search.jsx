@@ -3,6 +3,7 @@ import url_default from '../../axios/axios'; //importando url padrao
 
 import star from '../../assets/star.png';
 import book from '../../assets/book.png';
+import loading from '../../assets/loading.gif';
 import './Search.css';
 
 
@@ -33,8 +34,10 @@ const Search = ()  => {
     const getdados = async () => { // funcao assincrona
         try { 
             const resposta = await url_default.get(repos.current+`&per_page=10&page=${pag}&sort=${ordem}&order=${ascdesc}`); //tentando fazer a requisição.
+            console.log(ascdesc)
             const dado = resposta.data.items;
             const quant =  resposta.data.total_count;
+            console.log(resposta);
             if(quant > 1000){
                 setQtd_Max(1000)
             }
@@ -45,8 +48,13 @@ const Search = ()  => {
 
             if(repos.current == '')return//faz com que se a repos for igual a vazio, ela pare o codigo
             if(dado.length <= 1){
+                
+
                 let dad = document.getElementById('dad');
-                dad.innerHTML = `<p>Carregando...</p>`;
+                dad.innerHTML = `<img id='loading' src=${loading} alt='Carregando'></img>`;
+
+                let ord = document.getElementById("order");
+                ord.style.display = "none";
 
                 let dados = document.getElementById('dados');
                 dados.style.display = "none";
@@ -70,13 +78,19 @@ const Search = ()  => {
                 let qtd = document.getElementById('qtd');
                 qtd.style.display = "none";
 
+                let ord = document.getElementById("order");
+                ord.style.display = "none";
+
                 setDatos(dado);
                 let dad = document.getElementById('dad');
-                dad.innerHTML = `<p>Carregando...</p>`;
+                dad.innerHTML = `<img id='loading' src=${loading} alt='Carregando'></img>`;
                 await sleep(3000);
+                
                 dad.innerHTML = ``;
 
                 dados.style.display = "block";
+
+                ord.style.display = "block";
 
                 paginate.style.display = "block";
 
@@ -188,22 +202,20 @@ const Search = ()  => {
 
         switch(resposta) {
             case 'star_desc':
-                setAscDesc('desc');
                 setOrdem('stars');
-                getdados();
+                setAscDesc('desc');
+                console.log("desc");
                 break;
             case 'star_asc':
-                setAscDesc('asc');
                 setOrdem('stars');
-                getdados();
-                break;
-            case 'updated':
                 setAscDesc('asc');
-                setOrdem('updated');
-                getdados();
+                console.log("asc");
+                break;
+            case '':
                 break;
         }
-    }
+        
+    };
 
     useEffect(() => {
         getdados();
@@ -211,21 +223,23 @@ const Search = ()  => {
 
 return (
     <div className='search'>
-        <form onSubmit={(e) => {e.preventDefault()}}>
-            <input type='text' id='repository' placeholder='Digite Aqui' onChange={(e) => repos.current = e.target.value}/>
-            <button type='submit' id='btn' value='buscar' onClick={getdados}>Buscar</button>
-        </form>
-        <div id='qtd_order'>
-            <div id='qtd'>
-                <h2>Quantidade de repositórios: {qtd.toLocaleString()}</h2> {/* tolocalestring faz com que o número tenha pontos para diferenciar de dezena, centena e etc... */}
-            </div>
-            <div id="order">
-                <select id='order_select' onChange={Order}>
-                    <option value={"star_desc"}>Estrelas(maior)</option>
-                    <option value={"star_asc"}>Estrelas(menor)</option>
-                    <option value={"updated"}>Atualização</option>
-                </select>
-            </div>
+        <div id='container_form'>
+            <form onSubmit={(e) => {e.preventDefault()}}>
+                <input type='text' id='repository' placeholder='Digite Aqui' onChange={(e) => repos.current = e.target.value}/>
+                <button type='submit' id='btn' value='buscar' onClick={getdados}>Buscar</button>
+            </form>
+            <div id='qtd_order'>
+                <div id='qtd'>
+                    <h2>Quantidade de repositórios: {qtd.toLocaleString()}</h2> {/* tolocalestring faz com que o número tenha pontos para diferenciar de dezena, centena e etc... */}
+                </div>
+                <div id="order">
+                    <select id='order_select' onChange={Order}>
+                        <option value={""}>Ordem</option>
+                        <option value={"star_desc"}>Estrelas(maior)</option>
+                        <option value={"star_asc"}>Estrelas(menor)</option>
+                    </select>
+                </div>
+        </div>
         </div>
         <div id='dad'>
         </div>

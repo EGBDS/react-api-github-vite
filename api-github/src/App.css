@@ -7,7 +7,6 @@
   color: white;
   background-color: gray;
   width: 100vw;
-  background-image: url('../src/assets/img_background.jpg');
   background-size: contain;
   background-position: center;
 }
