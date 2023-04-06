@@ -1,2 +1,4 @@
 # react-api-github-vite
-Utiizando a APi do github para fazer consultas de repositórios com axios
+Projeto feito na biblioteca React.js e inicializado com vite.
+
+<strong>Integração com a API</strong>
