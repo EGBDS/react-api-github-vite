@@ -267,7 +267,9 @@ return (
                 <button type='submit' 
                         id='btn' 
                         value='buscar' 
-                        onClick={getdados}>Buscar</button>
+                        onClick={getdados} className="material-icons">
+                        search
+                        </button>
             </form>
             <div id='qtd_order' >
                 <div id='qtd' style={{display: qtd_id}}>
@@ -313,7 +315,6 @@ return (
                 {paginas().slice( pag_range_first, pag_range_end )}
                 {paginas().slice(paginas().length-1 , paginas().length)}
             </ul>
-            
             
         </div>
     </div>

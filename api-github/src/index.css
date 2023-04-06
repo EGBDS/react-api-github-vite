@@ -12,5 +12,16 @@
 @media (max-width: 500px) {
   * {
       font-size: x-small;
+      
   }
+  header > button{
+        max-height: 4rem;
+        display: flex;
+  }
+
+  #btn {
+    max-height: 1.5rem;
+    
+  }
+
 }

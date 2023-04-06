@@ -12,9 +12,28 @@
 }
 
 header {
-  background-color: rgb(31, 24, 24);
+  background-color: black;
   width: 100%;
   padding: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+header > button {
+  border-radius: 100px;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  text-align: center;
+  margin-left: 1rem;
+}
+
+header > button > img {
+  margin: 0;
+  padding: 0;
 }
 
 main {
@@ -23,7 +42,7 @@ main {
 }
 
 footer {
-  background-color: rgb(31, 24, 24);
+  background-color: black;
   width: 100%;
   padding: 1rem;
 }
@@ -37,11 +56,12 @@ a {
 }
 
 a:visited {
-  color: blueviolet;
+  color: aqua;
 }
 
 a:hover {
   opacity: 1;
   background-image: linear-gradient(to right, white, rgb(63, 60, 60));
-  border-radius: 10px;
+  border-radius: 5px;
+  color: black;
 }

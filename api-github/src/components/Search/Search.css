@@ -4,6 +4,13 @@
     min-height: 80vh;
 }
 
+form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
 #repository {
     width: 30%;
     margin: 0;
@@ -21,6 +28,10 @@
 
 
 #btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     background-color: wheat;
     min-width: 10%;
     transition: 0.4s;
@@ -134,7 +145,11 @@
 }
 
 .container_star > a:visited {
-    color: blueviolet;
+    color: aqua;
+}
+
+.container_star > a:hover {
+    color: black;
 }
 
 #paginate {
