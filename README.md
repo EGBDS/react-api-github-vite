@@ -1,10 +1,10 @@
 # react-api-github-vite
 <h2>Tecnologias</h2>
 <div style="display: flex; align-items: center; justify-content: center;">
-    <img style="width: 10%; max-height: 50px;" src='https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg'>
-    <img style="width: 10%; max-height: 50px;" src='https://upload.wikimedia.org/wikipedia/commons/9/99/Unofficial_JavaScript_logo_2.svg'>
-    <img style="width: 10%; max-height: 50px;" src='https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg'>
-    <img style="width: 10%; max-height: 50px;" src='https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg'>
+    <img style="width: 10%; height: 50px;" src='https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg'>
+    <img style="width: 10%; height: 50px;" src='https://upload.wikimedia.org/wikipedia/commons/9/99/Unofficial_JavaScript_logo_2.svg'>
+    <img style="width: 10%; height: 50px;" src='https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg'>
+    <img style="width: 10%; height: 50px;" src='https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg'>
 </div>
 
 
