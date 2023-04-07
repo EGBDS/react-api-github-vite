@@ -82,7 +82,7 @@ const Search = ()  => {
 
                 await sleep(3000);//espera a quantideda de tento descrito para continuar a execução.
 
-                setDad_id(`<p>Repositório não encontrado! Tente novamente.</p>`);
+                setDad_id(`Repositório não encontrado! Tente novamente.`);
             }
             else {
 
