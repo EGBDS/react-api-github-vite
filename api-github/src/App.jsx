@@ -3,32 +3,25 @@ import Search from './components/Search/Search';
 
 import dark from './assets/dark.png';
 import light from './assets/light.png';
-import { useState } from 'react';
+
+import { useContext } from 'react';
+import { ModoContext } from './context/ModoContext';//importando o context
+import { ModoProvider } from './context/ModoContext';
 
 function App() {
- 
-  const [ mode, setModo ] = useState('white');
-  const [ img, setImg ] = useState(light);
-  const [ txtmodo, setTxtModo ] = useState('Light Mode');
-  const [ txtcor, setTxtCor ] = useState('black');
-
-  console.log(mode)
-  function modos(){
-    if(img == light){
-
-    }
-  }
+  
+  const { filterInvert, mode, img, txtmodo, txtcor, backgroundHeader_Footer, colorheader_footer, backgroundSearch, alterModo } = useContext(ModoContext);
 
   return (
     <div className="App" >
-      <header id='header' >
+      <header id='header' style={{background: backgroundHeader_Footer, color: colorheader_footer}}>
         <h1>Pesquise Repositórios no GitHub</h1>
-        <button style={{background: mode, color: txtcor}} onClick={modos}><img src={img}></img>{txtmodo}</button>
+        <button style={{background: mode, color: txtcor}} onClick={alterModo} ><img style={{filter: filterInvert}} src={img}></img>{txtmodo}</button>
       </header>
       <main>
         <Search />
       </main>
-      <footer>
+      <footer style={{background: backgroundHeader_Footer, color: colorheader_footer}}>
         <p>Desenvolvido por <a href='https://github.com/EGBDS' target='_blank'>EGBDS</a></p>
       </footer>
     </div>

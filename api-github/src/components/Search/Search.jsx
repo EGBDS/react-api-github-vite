@@ -1,4 +1,6 @@
-import { useEffect, useRef, useState} from 'react';
+import { useEffect, useRef, useState, useContext} from 'react';
+import { ModoContext } from '../../context/ModoContext';//importando o context
+
 import url_default from '../../axios/axios'; //importando url padrao
 
 import star from '../../assets/star.png';
@@ -6,8 +8,9 @@ import book from '../../assets/book.png';
 import loading from '../../assets/loading.gif'; //importando imagens
 import './Search.css';
 
-
 const Search = ()  => {
+
+    const { backgroundSearch, colorInput, colorInputTxt, colorDados, filterInvert } = useContext(ModoContext);
 
     const sleep = ms => new Promise(res => setTimeout(res, ms)); //configuração padrão para o sleep
     
@@ -253,13 +256,13 @@ const Search = ()  => {
     },[pag]);
 
 return (
-    <div className='search'>
-
+    <div className='search' style={{background: backgroundSearch}}>
         <div id='container_form'>
 
             <form onSubmit={(e) => {e.preventDefault()}}>
 
-                <input type='text' 
+                <input  style={{background: colorInput, color: colorInputTxt}}
+                        type='text' 
                         id='repository' 
                         placeholder='Digite Aqui' 
                         onChange={(e) => repos.current = e.target.value}
@@ -273,7 +276,7 @@ return (
             </form>
             <div id='qtd_order' >
                 <div id='qtd' style={{display: qtd_id}}>
-                    <h2>Quantidade de repositórios: {qtd.toLocaleString()}</h2> {/* tolocalestring faz com que o número tenha pontos para diferenciar de dezena, centena e etc... */}
+                    <h2 style={{filter: filterInvert}}>Quantidade de repositórios: {qtd.toLocaleString()}</h2> {/* tolocalestring faz com que o número tenha pontos para diferenciar de dezena, centena e etc... */}
                 </div>
                 <div id="order" style={{display: ord_id}}>
                     <select id='order_select' onChange={Order} >
@@ -289,7 +292,7 @@ return (
         </div>
         <div id='dados' style={{display: dados_id}}>
             {(dados.map((dados) => (
-                <div key={dados.id} className='dados'>
+                <div key={dados.id} className='dados' style={{backgroundImage: colorDados}}>
                     <h2 className='repository_img'>
                         <a href={dados.svn_url} target='_blank'>
                             <img src={ book }></img>
