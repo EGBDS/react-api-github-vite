@@ -1,6 +1,6 @@
 # react-api-github-vite
 <h2>Tecnologias</h2>
-<div style="display: flex; aling-items: center; justify-content: center; max-height: 2rem;">
+<div style="display: flex; aling-items: center; justify-content: center; max-height: 10px;">
 <img src='https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg'>
 <img src='https://upload.wikimedia.org/wikipedia/commons/9/99/Unofficial_JavaScript_logo_2.svg'>
 <img src='https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg'>
