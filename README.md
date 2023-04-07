@@ -7,6 +7,8 @@
     <img style="width: 10%;" src='https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg'>
 </div>
 
+
+
 <strong>Projeto feito na biblioteca React.js e inicializado com vite.</strong>
 Utilizando componentização, Hooks( useEffect, useState, useContext) para concluir o projeto.
 Escolhi o React pois quando fui tentar aprender angular, pelo menos pra mim senti muita dificuldade na época, já que não tinha tido contato com nenhum framework parecido ou a biblioteca React e descobri sobre o React e vi que era mais simples, mas mesmo assim complicado, mas logo de cara percebi que conseguiria compreender mais nele por não ser tão complexo quanto angular. E o que o React entrega sinto que é sensacional e supre o que eu necessito agora.
