@@ -22,12 +22,16 @@ Utilizei a biblioteca <strong>Axios</strong> para utilizar o método "get" para 
 
 <strong>map: </strong>Utilizando o map do JavaScript para percorrer cada item do json que a API trás.
 
+-------------------------------------------------------------------------------------------------------------------
+
 <strong>Princípios da engenharia de software utilizados?</strong>
 
 KISS (Keep It Simple, Stupid!) E What You Produce, Others Will Consume. 
 
 O primeiro foi utilizado visando a maior clareza na hora de código, para que qualquer um consiga ler e entender e para ajudar nessa parte caso necessário, fiz comentários em partes do código para facilitar o compreendimento. 
 O segundo foi utilizado visando que uma hora ou outra alguém vai pelo menos acabar utilizando, mesmo nesse projeto não tendo muitas funcionalidades, desenvolvi pensando nessas partes, ainda mais de um site intuitivo.
+
+-------------------------------------------------------------------------------------------------------------------
 
 <strong>Dificuldades e como encontrei a solução </strong>
 
@@ -37,12 +41,18 @@ Mas como um todo foi um experiência nova, pois nunca havia consumido uma api e 
 
 Para resolver dúvidas sobre problemas que eu sabia que eu tinha que fazer eu ia atrás das informação, por exemplo, não sabia como mostrar de uma quantidade 'x' do array até a quantidade 'y', pesquisei e estudei, agora sei que com o "slice" da para fazer isso. Basicamente nas dúvidas que tive foi resolvido assim, buscando o conhecimento, não só a resposta.
 
+-------------------------------------------------------------------------------------------------------------------
+
 <strong>O que eu entendo que pode ser melhorado e como? </strong>
 
 Ao meu ponto de vista não vejo o que pode ser melhorado, mas não duvido que possa ter algo, mas uma pessoa mais experiente poderia/pode me apontar isso para que eu possa melhorar. Mas de primeira vista é isso.
+
+-------------------------------------------------------------------------------------------------------------------
 
 <strong>OBSERVAÇÃO:</strong>
 
 Não foi requisitado o modo dark ou light mode, mas decidi fazer para dar uma interação há mais no projeto.
 
 Gostei muito de ir atrás de como consumir a API pela documentação, e acredito que para todas API seja basicamente o mesmo conceito. Adquiri muito conhecimento, me "estressei" muito também, mas quando eu conseguia resolver era uma felicidade gigantesca, então no fim compensa tudo passado para conseguir concluir o projeto. 
+
+-------------------------------------------------------------------------------------------------------------------
