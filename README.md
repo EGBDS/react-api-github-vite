@@ -1,7 +1,7 @@
 # react-api-github-vite
 <h1>Tecnologias</h1>
 <div>
-<img src='/src/assets/css3-original.svg'>
+<img src='./src/assets/css3-original.svg'>
 </div>
 
 <strong>Projeto feito na biblioteca React.js e inicializado com vite.</strong>
