@@ -7,7 +7,7 @@
     <img style="width: 10%; height: 50px;" src='https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg'>
 </div>
 
-
+-------------------------------------------------------------------------------------------------------------------
 
 <strong>Projeto feito na biblioteca React.js e inicializado com vite.</strong>
 Utilizando componentização, Hooks( useEffect, useState, useContext) para concluir o projeto.
