@@ -1,5 +1,7 @@
 # react-api-github-vite
 <strong>Projeto feito na biblioteca React.js e inicializado com vite.</strong>
+Utilizando componentização, Hooks( useEffect, useState, useContext) para concluir o projeto.
+Escolhi o React pois quando fui tentar aprender angular, pelo menos pra mim senti muita dificuldade na época, já que não tinha tido contato com nenhum framework parecido ou a biblioteca React e descobri sobre o React e vi que era mais simples, mas mesmo assim complicado, mas logo de cara percebi que conseguiria compreender mais nele por não ser tão complexo quanto angular. E o que o React entrega sinto que é sensacional e supre o que eu necessito agora.
 
 <strong>Integração com a API</strong>
 Utilizei a biblioteca <strong>Axios</strong> para utilizar o método "get" para buscar dados da API.
@@ -17,7 +19,7 @@ KISS (Keep It Simple, Stupid!) E What You Produce, Others Will Consume.
 O primeiro foi utilizado visando a maior clareza na hora de código, para que qualquer um consiga ler e entender e para ajudar nessa parte caso necessário, fiz comentários em partes do código para facilitar o compreendimento. 
 O segundo foi utilizado visando que uma hora ou outra alguém vai pelo menos acabar utilizando, mesmo nesse projeto não tendo muitas funcionalidades, desenvolvi pensando nessas partes, ainda mais de um site intuitivo.
 
-<strong>Dificuldades e como encontrei a soluçã </strong>
+<strong>Dificuldades e como encontrei a solução </strong>
 
 Tive mais dificuldades na parte dos botões, pois nunca fiz um array com os botões com funcionalidades e dependendo da botão que está "focado/clicado" o demais botões da paginação muda.  
 
@@ -30,5 +32,7 @@ Para resolver dúvidas sobre problemas que eu sabia que eu tinha que fazer eu ia
 Ao meu ponto de vista não vejo o que pode ser melhorado, mas não duvido que possa ter algo, mas uma pessoa mais experiente poderia/pode me apontar isso para que eu possa melhorar. Mas de primeira vista é isso.
 
 <strong>OBSERVAÇÃO:</strong>
+
+Não foi requisitado o modo dark ou light mode, mas decidi fazer para dar uma interação há mais no projeto.
 
 Gostei muito de ir atrás de como consumir a API pela documentação, e acredito que para todas API seja basicamente o mesmo conceito. Adquiri muito conhecimento, me "estressei" muito também, mas quando eu conseguia resolver era uma felicidade gigantesca, então no fim compensa tudo passado para conseguir concluir o projeto. 
